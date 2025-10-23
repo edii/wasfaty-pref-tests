@@ -16,3 +16,4 @@ source/*.ndjson
 __pycache__/
 
 synthea.db
+.idea
