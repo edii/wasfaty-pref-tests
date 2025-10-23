@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+
+source/*.ndjson
+.venv/
+.ruff_cache/
+__pycache__/
+
+synthea.db
