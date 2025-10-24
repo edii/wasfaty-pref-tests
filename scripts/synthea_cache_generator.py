@@ -4,13 +4,15 @@ import json
 from s3 import S3
 from progress.bar import ChargingBar
 from util.ndjson_reader import NdjsonReader
+from typing import Dict
 
 # RESOURCES_TOTAL
 PATIENT_TOTAL = os.getenv("PATIENT_TOTAL", 10)
 ORGANIZATION_TOTAL = os.getenv("ORGANIZATION_TOTAL", 1)
 PRACTITIONER_TOTAL = os.getenv("PRACTITIONER_TOTAL", 20)
-ENCOUNTER_TOTAL = os.getenv("ENCOUNTER_TOTAL", 100)
-CONDITION_TOTAL = os.getenv("CONDITION_TOTAL", 4)
+# ENCOUNTER_TOTAL = os.getenv("ENCOUNTER_TOTAL", 100)
+# CONDITION_TOTAL = os.getenv("CONDITION_TOTAL", 4)
+ENCOUNTER_CONDITION_TOTAL = os.getenv("ENCOUNTER_CONDITION_TOTAL", 100)
 OBSERVATION_TOTAL = os.getenv("OBSERVATION_TOTAL", 700800)
 COMPOSITION_TOTAL = os.getenv("COMPOSITION_TOTAL", 233600)
 
@@ -205,17 +207,17 @@ class Inserter:
         self.commit()
         counter.finish()
 
-    def cache_encounter(self, ndjson_reader: NdjsonReader):
+    def cache_encounter_condition(self, ndjson_reader: NdjsonReader):
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS encounter(
-                id INTEGER PRIMARY KEY,
-                status TEXT,
-                subject TEXT,
-                period_start TEXT,
-                period_end TEXT,
-                tenant_id TEXT,
-                owned_by TEXT
-            )
+                                                       id INTEGER PRIMARY KEY,
+                                                       status TEXT,
+                                                       subject TEXT,
+                                                       period_start TEXT,
+                                                       period_end TEXT,
+                                                       tenant_id TEXT,
+                                                       owned_by TEXT
+               )
             """
         )
         self.commit()
@@ -223,51 +225,15 @@ class Inserter:
         self.cursor.execute("DELETE FROM encounter")
         self.commit()
 
-        resource_type = "Encounter"
-        filepath = get_filepath(resource_type)
-        counter = Counter(resource_type=resource_type, max=int(ENCOUNTER_TOTAL))
-        for data in ndjson_reader.read_records(filepath):
-            start = ''
-            if "start" in data["period"]:
-                start = data["period"]["start"]
-
-            end = ''
-            if "end" in data["period"]:
-                end = data["period"]["end"]
-
-            self.cursor.execute(
-                """INSERT INTO encounter
-                (id, status, subject, period_start, period_end, tenant_id, owned_by)
-                VALUES
-                (?, ?, ?, ?, ?, ?, ?)
-            """,
-                (
-                    data["id"],
-                    data["status"],
-                    data["subject"]["reference"],
-                    start,
-                    end,
-                    TENANT_ID,
-                    OWNED_BY,
-                ),
-            )
-            counter.next()
-            if counter.count % 100000 == 0:
-                self.commit()
-
-        self.commit()
-        counter.finish()
-
-    def cache_condition(self, ndjson_reader: NdjsonReader):
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS condition(
-                     id INTEGER PRIMARY KEY,
-                     subject TEXT,
-                     encounter TEXT,
-                     recorder TEXT,
-                     asserter TEXT,
-                     tenant_id TEXT,
-                     owned_by TEXT
+                                                       id INTEGER PRIMARY KEY,
+                                                       subject TEXT,
+                                                       encounter TEXT,
+                                                       recorder TEXT,
+                                                       asserter TEXT,
+                                                       tenant_id TEXT,
+                                                       owned_by TEXT
                )
             """
         )
@@ -277,33 +243,66 @@ class Inserter:
         self.cursor.execute("DELETE FROM condition")
         self.commit()
 
-        resource_type = "Condition"
+        resource_type = "Encounter_Condition"
         filepath = get_filepath(resource_type)
-        counter = Counter(resource_type=resource_type, max=int(CONDITION_TOTAL))
-        for data in ndjson_reader.read_records(filepath):
+        counter = Counter(resource_type=resource_type, max=int(ENCOUNTER_CONDITION_TOTAL))
+        for records in ndjson_reader.read_records(filepath):
+            for data in records:
+                if data["resourceType"] == "Encounter":
+                    self.set_encounter(data)
+                if data["resourceType"] == "Condition":
+                    self.set_condition(data)
 
-            self.cursor.execute(
-                """INSERT INTO condition
-                   (id, subject, encounter, recorder, asserter, tenant_id, owned_by)
-                   VALUES
-                       (?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    data["id"],
-                    data["subject"]["reference"],
-                    data["encounter"]["reference"],
-                    data["recorder"]["reference"],
-                    data["asserter"]["reference"],
-                    TENANT_ID,
-                    OWNED_BY,
-                ),
-            )
             counter.next()
             if counter.count % 100000 == 0:
                 self.commit()
 
         self.commit()
         counter.finish()
+
+    def set_encounter(self, data: Dict):
+        start = ''
+        if "start" in data["period"]:
+            start = data["period"]["start"]
+
+        end = ''
+        if "end" in data["period"]:
+            end = data["period"]["end"]
+
+        self.cursor.execute(
+            """INSERT INTO encounter
+            (id, status, subject, period_start, period_end, tenant_id, owned_by)
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?)
+        """,
+            (
+                data["id"],
+                data["status"],
+                data["subject"]["reference"],
+                start,
+                end,
+                TENANT_ID,
+                OWNED_BY,
+            ),
+        )
+
+    def set_condition(self, data: Dict):
+        self.cursor.execute(
+            """INSERT INTO condition
+               (id, subject, encounter, recorder, asserter, tenant_id, owned_by)
+               VALUES
+                   (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                data["id"],
+                data["subject"]["reference"],
+                data["encounter"]["reference"],
+                data["recorder"]["reference"],
+                data["asserter"]["reference"],
+                TENANT_ID,
+                OWNED_BY,
+            ),
+        )
 
     def cache_composition(self, ndjson_reader: NdjsonReader):
         self.cursor.execute(
@@ -512,9 +511,13 @@ def prepare_db():
     inserter.cache_patients(nr)
     inserter.cache_organizations(nr)
     inserter.cache_practitioner(nr)
-    inserter.cache_encounter(nr)
+
+    # union
+    inserter.cache_encounter_condition(nr)
+
+    # inserter.cache_encounter(nr)
     inserter.cache_observation(nr)
-    inserter.cache_condition(nr)
+    # inserter.cache_condition(nr)
     inserter.cache_composition(nr)
 
     inserter.cache_counts()
