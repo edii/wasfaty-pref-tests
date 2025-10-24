@@ -3,12 +3,9 @@
     "id": {{ bundle_id | tojson }},
     "type": "transaction",
     "entry": [
-        {
-            "resource": {{ record | tojson }},
-            "request": {
-                "method": "POST",
-                "url": "{{ resource_type }}"
-            }
-        }
+        {% for item in record %}
+            {{ item | tojson }}
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
     ]
 }

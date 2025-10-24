@@ -4,13 +4,13 @@ import json
 from s3 import S3
 from templates import render_template
 from util.ndjson_reader import NdjsonReader
-from typing import Dict
+from typing import List, Dict
 
 
 SOURCE_PATH = os.getenv("SOURCE_PATH", "./source")
 # must be upload bundle
 RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Organization,Practitioner,Encounter_Condition,Observation,Composition")
-# RESOURCE_TYPES = os.getenv("RESOURCES", "Patient") # test
+# RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Encounter_Condition") # test Patient,
 HOST = os.getenv("HOST", None)
 MULTITENANCY_ENABLED = os.getenv("MULTITENANCY_ENABLED", "false").lower() == "true"
 TENANT_ID = os.getenv("TENANT_ID", "t4")
@@ -28,9 +28,13 @@ def create_insert():
 
     for resource_type in RESOURCE_TYPES.split(","):
         filepath = get_filepath(resource_type)
+        i = 1
         for record in ndjson_reader.read_records(filepath):
-            create_bundle(resource_type=resource_type,record=record)
+            i = i + 1
+            create_bundle(resource_type=resource_type, record=record)
 
+            if i % 1000 == 0:
+                print(f"Processing [{i}].")
 
 def get_filepath(resource_type):
     if MULTITENANCY_ENABLED:
@@ -39,11 +43,21 @@ def get_filepath(resource_type):
     return f"{SOURCE_PATH}/{resource_type}.ndjson"
 
 
-def create_bundle(resource_type: str, record: Dict):
-    print(f"START SEND {resource_type}.")
+def create_bundle(resource_type: str, record: List[Dict] | Dict):
+    entry: List[Dict] = []
+    if type(record) == dict:
+        entry.append(json.loads(render_template(
+            "entity", directory="insert", params={"record": record, "resource_type": resource_type}
+        )))
+    else:
+        for item in record:
+            entry.append(json.loads(render_template(
+                "entity", directory="insert", params={"record": item, "resource_type": item["resourceType"]}
+            )))
+
     request_data = json.loads(
         render_template(
-            "insert", directory="insert", params={"record": record, "resource_type": resource_type}
+            "insert", directory="insert", params={"record": entry, "resource_type": resource_type}
         )
     )
 
