@@ -18,23 +18,24 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("patients"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from patient where id = {_id}"
+            f"SELECT id, given, family, phone, gender, birth_date, address, city, state, tenant_id, owned_by "
+            f"FROM patient WHERE id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "given": row[2],
-            "family": row[3],
-            "phone": row[4],
-            "gender": row[5],
-            "birth_date": row[6],
-            "address": row[7],
-            "city": row[8],
-            "state": row[9],
+            "id": row["id"],
+            "given": row["given"],
+            "family": row["family"],
+            "phone": row["phone"],
+            "gender": row["gender"],
+            "birth_date": row["birth_date"],
+            "address": row["address"],
+            "city": row["city"],
+            "state": row["state"],
             "multitenancy": {
-                "tenant_id": row[10],
-                "owned_by": row[11],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -42,23 +43,24 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("observations"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from observation where id = {_id}"
+            f"SELECT id, issued, subject, status, code, encounter, category, value_quantity, value_concept, tenant_id, owned_by "
+            f"FROM observation WHERE id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "issued": row[2],
-            "subject": row[3],
-            "status": row[4],
-            "code": row[5],
-            "encounter": row[6],
-            "category": row[7],
-            "value_quantity": row[8],
-            "value_codeable_concept": row[9],
+            "id": row["id"],
+            "issued": row["issued"],
+            "subject": row["subject"],
+            "status": row["status"],
+            "code": row["code"],
+            "encounter": row["encounter"],
+            "category": row["category"],
+            "value_quantity": row["value_quantity"],
+            "value_codeable_concept": row["value_concept"],
             "multitenancy": {
-                "tenant_id": row[10],
-                "owned_by": row[11],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -66,18 +68,18 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("organization"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from organization where id = {_id}"
+            f"SELECT id, name, active, type, tenant_id, owned_by from organization where id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "name": row[2],
-            "active": row[3],
-            "type": json.load(row[4]),
+            "id": row["id"],
+            "name": row["name"],
+            "active": row["active"],
+            "type": json.load(row["type"]),
             "multitenancy": {
-                "tenant_id": row[5],
-                "owned_by": row[6],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -85,18 +87,18 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("practitioner"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from practitioner where id = {_id}"
+            f"SELECT id, identifier, active, name, tenant_id, owned_by from practitioner where id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "identifier": json.load(row[2]),
-            "active": row[3],
-            "name": row[4],
+            "id": row["id"],
+            "identifier": json.load(row["identifier"]),
+            "active": row["active"],
+            "name": row["name"],
             "multitenancy": {
-                "tenant_id": row[5],
-                "owned_by": row[6],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -104,19 +106,19 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("encounter"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from encounter where id = {_id}"
+            f"SELECT id, status, subject, period_start, period_end, tenant_id, owned_by  from encounter where id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "status": row[2],
-            "subject": row[3],
-            "start": row[4],
-            "end": row[5],
+            "id": row["id"],
+            "status": row["status"],
+            "subject": row["subject"],
+            "start": row["period_start"],
+            "end": row["period_end"],
             "multitenancy": {
-                "tenant_id": row[6],
-                "owned_by": row[7],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -124,19 +126,19 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("condition"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from condition where id = {_id}"
+            f"SELECT id, subject, encounter, recorder, asserter, tenant_id, tenant_id from condition where id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "subject": row[2],
-            "encounter": row[3],
-            "recorder": row[4],
-            "asserter": row[5],
+            "id": row["id"],
+            "subject": row["subject"],
+            "encounter": row["encounter"],
+            "recorder": row["recorder"],
+            "asserter": row["asserter"],
             "multitenancy": {
-                "tenant_id": row[6],
-                "owned_by": row[7],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 
@@ -144,20 +146,20 @@ class FhirUser(HttpUser):
         fixtures_manager = FixturesManager.get_instance()
         _id = random.randint(1, fixtures_manager.fixture("composition"))
         res = fixtures_manager.cursor().execute(
-            f"SELECT * from composition where id = {_id}"
+            f"SELECT id, subject, status, encounter, author, section, tenant_id, owned_by from composition where id = {_id}"
         )
         row = res.fetchone()
 
         return {
-            "id": row[1],
-            "subject": row[2],
-            "status": row[3],
-            "encounter": row[4],
-            "author": json.load(row[5]),
-            "section": json.load(row[6]),
+            "id": row["id"],
+            "subject": row["subject"],
+            "status": row["status"],
+            "encounter": row["encounter"],
+            "author": json.load(row["author"]),
+            "section": json.load(row["section"]),
             "multitenancy": {
-                "tenant_id": row[7],
-                "owned_by": row[8],
+                "tenant_id": row["tenant_id"],
+                "owned_by": row["owned_by"],
             },
         }
 

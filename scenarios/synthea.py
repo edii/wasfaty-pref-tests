@@ -110,216 +110,222 @@ class SyntheaUser(FhirUser):
 
 class SyntheaResource(SyntheaUser):
     @task
-    @tag("search", "search_patient_identifier")
-    def search_patient_identifier(self):
+    @tag("search", "search_patient_by_id")
+    def search_patient_by_id(self):
         row = self.get_random_patient_row()
-        self.search_resource("Patient", f"identifier={row['id']}", row["multitenancy"])
+        self.search_resource("Patient", f"_id={row['id']}", row["multitenancy"])
 
-    @task
-    @tag("search", "search_patient_of_type_identifier")
-    def search_patient_of_type_identifier(self):
-        row = self.get_random_patient_row()
-        self.search_resource(
-            "Patient",
-            f"identifier:of-type=http://terminology.hl7.org/CodeSystem/v2-0203|NI|{row['id']}",
-            row["multitenancy"],
-        )
+    # @task
+    # @tag("search", "search_patient_identifier")
+    # def search_patient_identifier(self):
+    #     row = self.get_random_patient_row()
+    #     self.search_resource("Patient", f"identifier={row['id']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_patient_of_type_identifier")
+    # def search_patient_of_type_identifier(self):
+    #     row = self.get_random_patient_row()
+    #     self.search_resource(
+    #         "Patient",
+    #         f"identifier:of-type=http://terminology.hl7.org/CodeSystem/v2-0203|NI|{row['id']}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_patient_family_given")
+    # def search_patient_family_given(self):
+    #     row = self.get_random_patient_row()
+    #     given = row["given"].split(",")[0]
+    #     self.search_resource(
+    #         "Patient",
+    #         f"family={row['family']}&given={given}&_count=1",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_patient_exact_family_given")
+    # def search_patient_exact_family_given(self):
+    #     row = self.get_random_patient_row()
+    #     given = row["given"].split(",")[0]
+    #     self.search_resource(
+    #         "Patient",
+    #         f"family:exact={row['family']}&given:exact={given}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_patient_family_given_birth_date")
+    # def search_patient_family_given_birth_date(self):
+    #     row = self.get_random_patient_row()
+    #     given = row["given"].split(",")[0]
+    #     self.search_resource(
+    #         "Patient",
+    #         f"family={row['family']}&given={given}&birthdate={row['birth_date']}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_patient_telecom")
+    # def search_patient_telecom(self):
+    #     row = self.get_random_patient_row()
+    #     self.search_resource("Patient", f"telecom={row['phone']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_patient_family_given_city_state")
+    # def search_patient_family_given_city_state(self):
+    #     row = self.get_random_patient_row()
+    #     given = row["given"].split(",")[0]
+    #     self.search_resource(
+    #         "Patient",
+    #         f"family={row['family']}&given={given}&address-city={row['city']}&address-state={row['state']}&_count=1",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_patient_city_state")
+    # def search_patient_city_state(self):
+    #     row = self.get_random_patient_row()
+    #     self.search_resource(
+    #         "Patient",
+    #         f"address-city={row['city']}&address-state={row['state']}&_count=1",
+    #         row["multitenancy"],
+    #     )
 
-    @task
-    @tag("search", "search_patient_family_given")
-    def search_patient_family_given(self):
-        row = self.get_random_patient_row()
-        given = row["given"].split(",")[0]
-        self.search_resource(
-            "Patient",
-            f"family={row['family']}&given={given}&_count=1",
-            row["multitenancy"],
-        )
+    # @task
+    # @tag("search", "search_observation_patient")
+    # def search_observation_patient(self):
+    #     row = self.get_random_observation_row()
+    #     self.search_resource(
+    #         "Observation", f"subject={row['subject']}&_count=1", row["multitenancy"]
+    #     )
+    #
+    # @task
+    # @tag("search", "search_observation_code")
+    # def search_observation_code(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     self.search_resource("Observation", f"code={code}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_observation_system_code")
+    # def search_observation_system_code(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     system = json.loads(row["code"])["coding"][0]["system"]
+    #     self.search_resource(
+    #         "Observation", f"code={system}|{code}", row["multitenancy"]
+    #     )
+    #
+    # @task
+    # @tag("search", "search_observation_text_code")
+    # def search_observation_text_code(self):
+    #     row = self.get_random_observation_row()
+    #     text = json.loads(row["code"])["text"]
+    #     self.search_resource("Observation", f"code:text={text}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_observation_code_value_quantity")
+    # def search_observation_code_value_quantity(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     value_quantity = json.loads(row["value_quantity"])["value"]
+    #     self.search_resource(
+    #         "Observation",
+    #         f"code={code}&value-quantity=gt{value_quantity}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_observation_value_quantity_value_code_code")
+    # def search_observation_value_quantity_value_code_code(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     self.search_resource(
+    #         "Observation",
+    #         f"code={code}&value-quantity={row['value']}||{row['unit']}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "search_observation_value_quantity_value_system_code_code")
+    # def search_observation_value_quantity_value_system_code_code(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     self.search_resource(
+    #         "Observation",
+    #         f"code={code}&value-quantity={row['value']}|http://unitsofmeasure.org|{row['unit']}",
+    #         row["multitenancy"],
+    #     )
+    #
+    # @task
+    # @tag("search", "delete_observation_by_id")
+    # def delete_observation_by_id(self):
+    #     row = self.get_random_observation_row()
+    #     self.delete_resource("Observation", row["id"], row["multitenancy"])
 
-    @task
-    @tag("search", "search_patient_exact_family_given")
-    def search_patient_exact_family_given(self):
-        row = self.get_random_patient_row()
-        given = row["given"].split(",")[0]
-        self.search_resource(
-            "Patient",
-            f"family:exact={row['family']}&given:exact={given}",
-            row["multitenancy"],
-        )
+    # @task
+    # @tag("search", "update_observation_by_id")
+    # def update_observation_by_id(self):
+    #     row = self.get_random_observation_row()
+    #     row["description"] = f"{row['description']} {int(time.time())}"
+    #     request_data = json.loads(
+    #         render_template("Observation", directory="source", params=row)
+    #     )
+    #
+    #     self.update_resource(
+    #         "Observation", row["id"], request_data, row["multitenancy"]
+    #     )
 
-    @task
-    @tag("search", "search_patient_family_given_birth_date")
-    def search_patient_family_given_birth_date(self):
-        row = self.get_random_patient_row()
-        given = row["given"].split(",")[0]
-        self.search_resource(
-            "Patient",
-            f"family={row['family']}&given={given}&birthdate={row['birth_date']}",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "search_patient_telecom")
-    def search_patient_telecom(self):
-        row = self.get_random_patient_row()
-        self.search_resource("Patient", f"telecom={row['phone']}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_patient_family_given_city_state")
-    def search_patient_family_given_city_state(self):
-        row = self.get_random_patient_row()
-        given = row["given"].split(",")[0]
-        self.search_resource(
-            "Patient",
-            f"family={row['family']}&given={given}&address-city={row['city']}&address-state={row['state']}&_count=1",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "search_patient_city_state")
-    def search_patient_city_state(self):
-        row = self.get_random_patient_row()
-        self.search_resource(
-            "Patient",
-            f"address-city={row['city']}&address-state={row['state']}&_count=1",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "search_observation_patient")
-    def search_observation_patient(self):
-        row = self.get_random_observation_row()
-        self.search_resource(
-            "Observation", f"subject={row['subject']}&_count=1", row["multitenancy"]
-        )
-
-    @task
-    @tag("search", "search_observation_code")
-    def search_observation_code(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        self.search_resource("Observation", f"code={code}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_observation_system_code")
-    def search_observation_system_code(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        system = json.loads(row["code"])["coding"][0]["system"]
-        self.search_resource(
-            "Observation", f"code={system}|{code}", row["multitenancy"]
-        )
-
-    @task
-    @tag("search", "search_observation_text_code")
-    def search_observation_text_code(self):
-        row = self.get_random_observation_row()
-        text = json.loads(row["code"])["text"]
-        self.search_resource("Observation", f"code:text={text}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_observation_code_value_quantity")
-    def search_observation_code_value_quantity(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        value_quantity = json.loads(row["value_quantity"])["value"]
-        self.search_resource(
-            "Observation",
-            f"code={code}&value-quantity=gt{value_quantity}",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "search_observation_value_quantity_value_code_code")
-    def search_observation_value_quantity_value_code_code(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        self.search_resource(
-            "Observation",
-            f"code={code}&value-quantity={row['value']}||{row['unit']}",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "search_observation_value_quantity_value_system_code_code")
-    def search_observation_value_quantity_value_system_code_code(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        self.search_resource(
-            "Observation",
-            f"code={code}&value-quantity={row['value']}|http://unitsofmeasure.org|{row['unit']}",
-            row["multitenancy"],
-        )
-
-    @task
-    @tag("search", "delete_observation_by_id")
-    def delete_observation_by_id(self):
-        row = self.get_random_observation_row()
-        self.delete_resource("Observation", row["id"], row["multitenancy"])
-
-    @task
-    @tag("search", "update_observation_by_id")
-    def update_observation_by_id(self):
-        row = self.get_random_observation_row()
-        row["description"] = f"{row['description']} {int(time.time())}"
-        request_data = json.loads(
-            render_template("Observation", directory="source", params=row)
-        )
-
-        self.update_resource(
-            "Observation", row["id"], request_data, row["multitenancy"]
-        )
-
-    @task
-    @tag("search", "search_observation_subject_value_composite")
-    def search_observation_subject_value_composite(self):
-        row = self.get_random_observation_row()
-        code = json.loads(row["code"])["coding"][0]["code"]
-        value_quantity = row["value_quantity"]
-        value_concept_coding = row["value_codeable_concept"]
-
-        if value_quantity is None:
-            value_concept_coding = json.loads(value_concept_coding)["coding"][0]
-            self.search_resource(
-                "Observation",
-                f"subject={row['subject']}&code-value-concept={code}${value_concept_coding['system']}|{value_concept_coding['code']}&_count=1",
-            )
-        else:
-            value_quantity = json.loads(value_quantity)
-            self.search_resource(
-                "Observation",
-                f"subject={row['subject']}&code-value-quantity={code}$ge{value_quantity['value']}&_count=1",
-            )
-
-    @task
-    @tag("search", "search_organization_by_id")
-    def search_organization_by_id(self):
-        row = self.get_random_organization_row()
-        self.search_resource("Organization", f"_id={row['id']}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_practitioner_by_id")
-    def search_practitioner_by_id(self):
-        row = self.get_random_practitioner_row()
-        self.search_resource("Practitioner", f"_id={row['id']}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_encounter_by_id")
-    def search_encounter_by_id(self):
-        row = self.get_random_encounter_row()
-        self.search_resource("Encounter", f"_id={row['id']}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_condition_by_id")
-    def search_condition_by_id(self):
-        row = self.get_random_condition_row()
-        self.search_resource("Condition", f"_id={row['id']}", row["multitenancy"])
-
-    @task
-    @tag("search", "search_composition_by_id")
-    def search_composition_by_id(self):
-        row = self.get_random_composition_row()
-        self.search_resource("Composition", f"_id={row['id']}", row["multitenancy"])
+    # @task
+    # @tag("search", "search_observation_subject_value_composite")
+    # def search_observation_subject_value_composite(self):
+    #     row = self.get_random_observation_row()
+    #     code = json.loads(row["code"])["coding"][0]["code"]
+    #     value_quantity = row["value_quantity"]
+    #     value_concept_coding = row["value_codeable_concept"]
+    #
+    #     if value_quantity is None:
+    #         value_concept_coding = json.loads(value_concept_coding)["coding"][0]
+    #         self.search_resource(
+    #             "Observation",
+    #             f"subject={row['subject']}&code-value-concept={code}${value_concept_coding['system']}|{value_concept_coding['code']}&_count=1",
+    #         )
+    #     else:
+    #         value_quantity = json.loads(value_quantity)
+    #         self.search_resource(
+    #             "Observation",
+    #             f"subject={row['subject']}&code-value-quantity={code}$ge{value_quantity['value']}&_count=1",
+    #         )
+    #
+    # @task
+    # @tag("search", "search_organization_by_id")
+    # def search_organization_by_id(self):
+    #     row = self.get_random_organization_row()
+    #     self.search_resource("Organization", f"_id={row['id']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_practitioner_by_id")
+    # def search_practitioner_by_id(self):
+    #     row = self.get_random_practitioner_row()
+    #     self.search_resource("Practitioner", f"_id={row['id']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_encounter_by_id")
+    # def search_encounter_by_id(self):
+    #     row = self.get_random_encounter_row()
+    #     self.search_resource("Encounter", f"_id={row['id']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_condition_by_id")
+    # def search_condition_by_id(self):
+    #     row = self.get_random_condition_row()
+    #     self.search_resource("Condition", f"_id={row['id']}", row["multitenancy"])
+    #
+    # @task
+    # @tag("search", "search_composition_by_id")
+    # def search_composition_by_id(self):
+    #     row = self.get_random_composition_row()
+    #     self.search_resource("Composition", f"_id={row['id']}", row["multitenancy"])
 
 
 class CustomException(Exception):

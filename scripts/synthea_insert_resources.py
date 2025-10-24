@@ -8,7 +8,9 @@ from typing import Dict
 
 
 SOURCE_PATH = os.getenv("SOURCE_PATH", "./source")
-RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Organization,Practitioner,Encounter,Condition,Observation,Composition")
+# must be upload bundle
+RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Organization,Practitioner,Encounter_Condition,Observation,Composition")
+# RESOURCE_TYPES = os.getenv("RESOURCES", "Patient") # test
 HOST = os.getenv("HOST", None)
 MULTITENANCY_ENABLED = os.getenv("MULTITENANCY_ENABLED", "false").lower() == "true"
 TENANT_ID = os.getenv("TENANT_ID", "t4")
@@ -38,13 +40,18 @@ def get_filepath(resource_type):
 
 
 def create_bundle(resource_type: str, record: Dict):
+    print(f"START SEND {resource_type}.")
     request_data = json.loads(
         render_template(
             "insert", directory="insert", params={"record": record, "resource_type": resource_type}
         )
     )
 
-    headers = {"prefer": "respond-async"}
+    headers = {
+        "prefer": "respond-sync",
+        "x-consumer-id": "pref-test",
+        "Content-Type": "application/json",
+    }
 
     if MULTITENANCY_ENABLED:
         if resource_type == "Organization":
@@ -58,11 +65,12 @@ def create_bundle(resource_type: str, record: Dict):
         url=f"{HOST}",
         headers=headers,
         json=request_data,
+        verify=True,
     )
 
-    if response.status_code == 202:
+    if response.status_code == 202 or response.status_code == 200:
         print(
-            f"Send insert for {resource_type}: {response.headers['Content-Location']}"
+            f"Send insert for {resource_type}."
         )
     else:
         print(

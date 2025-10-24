@@ -22,6 +22,7 @@ common_header = HEADERS.copy()
 def on_locust_init(environment: Environment, **kwargs):
     if SYNTHEA_DB is not None:
         con = sqlite3.connect(SYNTHEA_DB)
+        con.row_factory = sqlite3.Row
         cursor = con.cursor()
         count_patients = int(
             cursor.execute(
