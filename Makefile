@@ -8,5 +8,6 @@ cache:
 kodjin-insert:
 	HOST=http://localhost:4001/ uv run -m scripts.synthea_insert_resources
 
+#port-forward to kauth service
 locust:
-	KODJIN_ROOT_DOMAIN=http://localhost:4002 MULTITENANCY_ENABLED=false uv run locust
+	KODJIN_ROOT_DOMAIN=http://localhost:4003 MULTITENANCY_ENABLED=false uv run locust
