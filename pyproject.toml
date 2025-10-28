@@ -12,4 +12,7 @@ dependencies = [
     "psycopg>=3.2.9",
     "psycopg-pool>=3.2.6",
     "ruff>=0.12.0",
+    "jwt",
+    "pyjwt>=2.10.1",
+    "aiohttp>=3.13.1",
 ]

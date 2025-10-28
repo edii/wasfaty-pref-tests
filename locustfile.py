@@ -4,24 +4,22 @@ from locust.env import Environment
 from locust.runners import (
     WorkerRunner,
 )
-from settings import HEADERS, SYNTHEA_DB
+from settings import HEADERS, CACHE_DB
 
-# Dont work with this import (?)
-# from scenarios.cockroachdb import CockroachResource
-from scenarios.synthea import (
-    SyntheaResource,
+from scenarios.Observation import (
+    ObservationResource,
 )
 from fixtures_manager import FixturesManager
 
-__all__ = ["SyntheaResource"]
+__all__ = ["ObservationResource"]
 
 common_header = HEADERS.copy()
 
 
 @events.init.add_listener
 def on_locust_init(environment: Environment, **kwargs):
-    if SYNTHEA_DB is not None:
-        con = sqlite3.connect(SYNTHEA_DB)
+    if CACHE_DB is not None:
+        con = sqlite3.connect(CACHE_DB)
         con.row_factory = sqlite3.Row
         cursor = con.cursor()
         count_patients = int(
