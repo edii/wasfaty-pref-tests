@@ -14,4 +14,5 @@ dependencies = [
     "ruff>=0.12.0",
     "jwt",
     "pyjwt>=2.10.1",
+    "aiohttp>=3.13.1",
 ]

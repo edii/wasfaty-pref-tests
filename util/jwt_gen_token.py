@@ -3,7 +3,7 @@ from typing import Dict
 import jwt
 from datetime import datetime, timedelta, timezone
 
-SECRET_KEY = "wasfaty-pref-test"
+SECRET_KEY = "wasfaty-perf-test"
 ALGORITHM = "HS256"
 
 

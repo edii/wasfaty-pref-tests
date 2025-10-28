@@ -3,7 +3,7 @@
     "id": {{ bundle_id | tojson }},
     "type": "transaction",
     "entry": [
-        {% for item in record %}
+        {% for item in records %}
             {{ item | tojson }}
             {% if not loop.last %}, {% endif %}
         {% endfor %}
