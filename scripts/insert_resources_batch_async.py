@@ -1,18 +1,15 @@
 import os
-import requests
 import json
 from templates import render_template
 from util.ndjson_reader import NdjsonReader
 from typing import List, Dict, Any
-from multiprocessing import Pool
 import asyncio
 import aiohttp
 
 
 SOURCE_PATH = os.getenv("SOURCE_PATH", "./source")
 # must be upload bundle
-# RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Organization,Practitioner,Encounter_Condition,Observation,Composition")
-RESOURCE_TYPES = os.getenv("RESOURCES", "Observation") # test Patient,
+RESOURCE_TYPES = os.getenv("RESOURCES", "Patient,Organization,Practitioner,Encounter_Condition,Observation,Composition")
 HOST = os.getenv("HOST", None)
 SHOW_GROUPS_LOGS_INSERT_RESOURCES = os.getenv("SHOW_GROUPS_LOGS_INSERT_RESOURCES", True)
 BATCH = os.getenv("INSERT_BATCH", 50)
