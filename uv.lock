@@ -558,6 +558,15 @@ wheels = [
 ]
 
 [[package]]
+name = "iniconfig"
+version = "2.3.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/34/14ca021ce8e5dfedc35312d08ba8bf51fdd999c576889fc2c24cb97f4f10/iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730", size = 20503, upload-time = "2025-10-18T21:55:43.219Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12", size = 7484, upload-time = "2025-10-18T21:55:41.639Z" },
+]
+
+[[package]]
 name = "itsdangerous"
 version = "2.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -601,7 +610,7 @@ wheels = [
 
 [[package]]
 name = "locust"
-version = "2.37.11"
+version = "2.42.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "configargparse" },
@@ -613,20 +622,23 @@ dependencies = [
     { name = "locust-cloud" },
     { name = "msgpack" },
     { name = "psutil" },
+    { name = "pytest" },
+    { name = "python-engineio" },
+    { name = "python-socketio", extra = ["client"] },
     { name = "pywin32", marker = "sys_platform == 'win32'" },
     { name = "pyzmq" },
     { name = "requests" },
     { name = "setuptools" },
     { name = "werkzeug" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4f/19/66cdab585f7d4385be615d3792402fc75a1bed7519e5283adbe7133dbc78/locust-2.37.11.tar.gz", hash = "sha256:89c79bc599aa57160bd41dd3876e35d8b9dee5abded78e35008d01fd8f1640ed", size = 2252602, upload-time = "2025-06-23T08:22:23.922Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/da/6108cb1b5be2ede0f9501bed5a9e1b86f6c4cffe66e18cab1af66aca713a/locust-2.42.1.tar.gz", hash = "sha256:4510dfa92213a9b4965d4a7a9aa40f105b6f886695bd27655cd3a5ba13040a6d", size = 1416504, upload-time = "2025-10-27T20:49:16.964Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3a/2d/e5ae05911521bf84113be349d51b16d54589e986837d2d518f63434ea3ec/locust-2.37.11-py3-none-any.whl", hash = "sha256:b826f95fbfd5d9a32df6ab1b74672b88e65bbc33ec99fdc10af98079952ad517", size = 2269179, upload-time = "2025-06-23T08:22:21.067Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/84/d77612e9d2a8c03261c5e31335695ee2c1abf41c45bc483df5130b7d6548/locust-2.42.1-py3-none-any.whl", hash = "sha256:747085a2324f37164594c8063a1c6f3cdef870eea2588710361b45d5e5598e1e", size = 1435190, upload-time = "2025-10-27T20:49:14.268Z" },
 ]
 
 [[package]]
 name = "locust-cloud"
-version = "1.24.2"
+version = "1.27.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "configargparse" },
@@ -635,9 +647,9 @@ dependencies = [
     { name = "python-engineio" },
     { name = "python-socketio", extra = ["client"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d9/77/bda24167a2b763ba5d3cad1f3fa2a938f5273e51a61bffdbc8dc2e3ba24d/locust_cloud-1.24.2.tar.gz", hash = "sha256:a2656537ff367e6d4d4673477ba9e81ed73a8423a71573cd2512248740eded77", size = 451122, upload-time = "2025-06-23T11:08:00.558Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/b1/76542f2a9cd7d67c265c0aaf88442874f00249215e3a43f1de8a1dba0f27/locust_cloud-1.27.9.tar.gz", hash = "sha256:cd0c194bbcb8ef42ee00b99ec049b5322fd59620c35ba892b664aa77334e7f9c", size = 456691, upload-time = "2025-10-28T08:45:20.635Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f4/38/8cda8aa1c6dfe5c5abbf69a9b10c03585c37eff64ca92733a291806052ac/locust_cloud-1.24.2-py3-none-any.whl", hash = "sha256:64a5e6f2bf0a1a012d9805291d44fb57e57535c2b5c0fa5bc87ba0d7cce9ef9c", size = 408594, upload-time = "2025-06-23T11:07:59.092Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/6b/2c8fb542b5b87e4c97734cbdf759e1b56bbbd7264bf0e1eaf2d8c0edf4aa/locust_cloud-1.27.9-py3-none-any.whl", hash = "sha256:887a519dc18d89223eaf8ae710437bc75a035013c62e61bec886108c678bf48b", size = 412513, upload-time = "2025-10-28T08:45:19.103Z" },
 ]
 
 [[package]]
@@ -768,12 +780,30 @@ wheels = [
 ]
 
 [[package]]
+name = "packaging"
+version = "25.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727, upload-time = "2025-04-19T11:48:59.673Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469, upload-time = "2025-04-19T11:48:57.875Z" },
+]
+
+[[package]]
 name = "platformdirs"
 version = "4.3.8"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fe/8b/3c73abc9c759ecd3f1f7ceff6685840859e8070c4d947c93fae71f6a0bf2/platformdirs-4.3.8.tar.gz", hash = "sha256:3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc", size = 21362, upload-time = "2025-05-07T22:47:42.121Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fe/39/979e8e21520d4e47a0bbe349e2713c0aac6f3d853d0e5b34d76206c439aa/platformdirs-4.3.8-py3-none-any.whl", hash = "sha256:ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4", size = 18567, upload-time = "2025-05-07T22:47:40.376Z" },
+]
+
+[[package]]
+name = "pluggy"
+version = "1.6.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f9/e2/3e91f31a7d2b083fe6ef3fa267035b518369d9511ffab804f839851d2779/pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3", size = 69412, upload-time = "2025-05-15T12:30:07.975Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746", size = 20538, upload-time = "2025-05-15T12:30:06.134Z" },
 ]
 
 [[package]]
@@ -900,12 +930,37 @@ wheels = [
 ]
 
 [[package]]
+name = "pygments"
+version = "2.19.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631, upload-time = "2025-06-21T13:39:12.283Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217, upload-time = "2025-06-21T13:39:07.939Z" },
+]
+
+[[package]]
 name = "pyjwt"
 version = "2.10.1"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e7/46/bd74733ff231675599650d3e47f361794b22ef3e3770998dda30d3b63726/pyjwt-2.10.1.tar.gz", hash = "sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953", size = 87785, upload-time = "2024-11-28T03:43:29.933Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/61/ad/689f02752eeec26aed679477e80e632ef1b682313be70793d798c1d5fc8f/PyJWT-2.10.1-py3-none-any.whl", hash = "sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb", size = 22997, upload-time = "2024-11-28T03:43:27.893Z" },
+]
+
+[[package]]
+name = "pytest"
+version = "8.4.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "iniconfig" },
+    { name = "packaging" },
+    { name = "pluggy" },
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a3/5c/00a0e072241553e1a7496d638deababa67c5058571567b92a7eaa258397c/pytest-8.4.2.tar.gz", hash = "sha256:86c0d0b93306b961d58d62a4db4879f27fe25513d4b969df351abdddb3c30e01", size = 1519618, upload-time = "2025-09-04T14:34:22.711Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a8/a4/20da314d277121d6534b3a980b29035dcd51e6744bd79075a6ce8fa4eb8d/pytest-8.4.2-py3-none-any.whl", hash = "sha256:872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79", size = 365750, upload-time = "2025-09-04T14:34:20.226Z" },
 ]
 
 [[package]]
@@ -934,15 +989,15 @@ wheels = [
 
 [[package]]
 name = "python-socketio"
-version = "5.13.0"
+version = "5.14.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bidict" },
     { name = "python-engineio" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/21/1a/396d50ccf06ee539fa758ce5623b59a9cb27637fc4b2dc07ed08bf495e77/python_socketio-5.13.0.tar.gz", hash = "sha256:ac4e19a0302ae812e23b712ec8b6427ca0521f7c582d6abb096e36e24a263029", size = 121125, upload-time = "2025-04-12T15:46:59.933Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/3f/02f5970c82285bd015ec433078bfc3275580b03715ed6024607dbe0f1966/python_socketio-5.14.3.tar.gz", hash = "sha256:cd8da5e0666e741b4be19e07882e880f57a4751d1645f92c2bc746c95f23b1eb", size = 124266, upload-time = "2025-10-29T09:42:53.749Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3c/32/b4fb8585d1be0f68bde7e110dffbcf354915f77ad8c778563f0ad9655c02/python_socketio-5.13.0-py3-none-any.whl", hash = "sha256:51f68d6499f2df8524668c24bcec13ba1414117cfb3a90115c559b601ab10caf", size = 77800, upload-time = "2025-04-12T15:46:58.412Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/1a/b393a06aa6f2f6ab4a9c5c160a62d488b17d6da5cf93a67bc13a6e3239cd/python_socketio-5.14.3-py3-none-any.whl", hash = "sha256:a5208c1bbf45a8d6328d01ed67e3fa52ec8b186fd3ea44cfcfcbd120f0c71fbe", size = 79010, upload-time = "2025-10-29T09:42:52.098Z" },
 ]
 
 [package.optional-dependencies]
