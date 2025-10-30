@@ -23,6 +23,11 @@ class FhirClient(FhirUser):
             headers["Authorization"] = f"bearer {token}"
 
         name = "_".join(name)
+        name = f"{resource_type}:{name}"
+
+        # fix for used sdk locust
+        self.client.request_name=name
+
         with self.client.get(
             url=f"/search/{resource_type}?{search_params}",
             headers=headers,
@@ -30,6 +35,8 @@ class FhirClient(FhirUser):
             name=name,
             catch_response=True,
         ) as response:
+            response.request_meta["name"] = name
+
             response_json = self.try_return_json(response)
 
             if response.status_code != 200:
@@ -41,6 +48,8 @@ class FhirClient(FhirUser):
                 response.failure(
                     f"Bundle doesn't present in search, response = {response.text}"
                 )
+
+        self.client.request_name=None
 
     def try_return_json(self, response):
         try:
