@@ -1,0 +1,63 @@
+{
+    "id": {{ id | tojson }},
+    "meta": {
+        "source": "{{ ref_organization }}",
+        "profile": [
+            "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-condition-simple"
+        ],
+        "versionId": "1",
+        "lastUpdated": "{{ last_updated | datetimeformat }}"
+    },
+    "text": {
+        "status": {{ status_text | tojson }},
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Severe burn of left ear (Date: 24-May 2012)</div>"
+    },
+    "extension": [
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-extension-condition-is-chronic",
+            "valueBoolean": false
+        }
+    ],
+    "clinicalStatus": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                "code": "active",
+                "display": "Active"
+            }
+        ]
+    },
+    "verificationStatus": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                "code": "confirmed",
+                "display": "Confirmed"
+            }
+        ]
+    },
+    "code": {
+        "coding": [
+            {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "A01",
+                "display": "Typhoid and paratyphoid fevers"
+            }
+        ]
+    },
+    "subject": {
+        "reference": "{{ ref_patient }}"
+    },
+    "encounter": {
+        "reference": "{{ ref_encounter }}"
+    },
+    "onsetDateTime": "2025-10-21T18:56:10Z",
+    "recordedDate": "2025-10-21T18:56:15Z",
+    "recorder": {
+        "reference": "{{ ref_practitioner }}"
+    },
+    "asserter": {
+        "reference": "{{ ref_practitioner }}"
+    },
+    "resourceType": "Condition"
+}

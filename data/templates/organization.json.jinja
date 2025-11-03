@@ -1,0 +1,75 @@
+{
+    "id": {{id | tojson}},
+    "meta": {
+        "profile": [
+            "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-facility"
+        ],
+        "versionId": "1",
+        "lastUpdated": "{{ last_updated | datetimeformat }}"
+    },
+    "text": {
+        "status": "{{ status }}",
+        "div": "<div>!-- Snipped for Brevity --></div>"
+    },
+    "extension": [
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-extension-organization-health-area",
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "system": "http://ksa-ehealth.sa/fhir/terminology/CodeSystem/ksa-ehealth-organization-health-area",
+                        "code": "0005",
+                        "display": "Hafar Al-Batin"
+                    }
+                ]
+            }
+        },
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-extension-facility-integration-type",
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "system": "http://ksa-ehealth.sa/fhir/terminology/CodeSystem/ksa-ehealth-facility-integration-type",
+                        "code": "I",
+                        "display": "Integrator"
+                    },
+                    {
+                        "system": "http://ksa-ehealth.sa/fhir/terminology/CodeSystem/ksa-ehealth-facility-integration-type",
+                        "code": "PP",
+                        "display": "Provider portal"
+                    }
+                ]
+            }
+        },
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-extension-facility-tenant-name",
+            "valueString": "google"
+        }
+    ],
+    "identifier": [
+        {
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "{{ identifier }}"
+        }
+    ],
+    "active": true,
+    "type": [
+        {
+            "coding": [
+                {
+                    "system": "http://ksa-ehealth.sa/fhir/terminology/CodeSystem/ksa-ehealth-facility-type",
+                    "code": "clinic",
+                    "display": "Clinic"
+                }
+            ]
+        }
+    ],
+    "name": "{{ name }}",
+    "telecom": [
+        {
+            "system": "phone",
+            "value": "{{ telecom_mobile }}"
+        }
+    ],
+    "resourceType": "Organization"
+}

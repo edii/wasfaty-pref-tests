@@ -1,0 +1,149 @@
+{
+    "id": {{ id | tojson }},
+    "meta": {
+        "versionId": "1",
+        "lastUpdated": "{{ last_updated | datetimeformat }}",
+        "profile": [
+            "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-patient-identified"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-patient-legal-capacity",
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "system": "http://ksa-ehealth.sa/terminology/CodeSystem/ksa-ehealth-legal-capacity",
+                        "code": "full",
+                        "display": "Full legal capacity"
+                    }
+                ]
+            }
+        },
+        {
+            "extension": [
+                {
+                    "url": "code",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "urn:iso:std:iso:3166:-2",
+                                "code": "SA",
+                                "display": "Saudi Arabia"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-patient-nationality"
+        },
+        {
+            "url": "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-patient-residence-type",
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "system": "http://ksa-ehealth.sa/fhir/CodeSystem/ksa-ehealth-patient-residence-type",
+                        "code": "citizen",
+                        "display": "Citizen"
+                    }
+                ]
+            }
+        }
+    ],
+    "identifier": [
+        {
+            "system": "http://nphies.sa/identifier/nationalid",
+            "type": {
+                "coding": [
+                    {
+                        "code": "NI",
+                        "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                    }
+                ]
+            },
+            "value": {{ identifier | tojson }}
+        }
+    ],
+    "active": true,
+    "name": [
+        {
+            "extension": [
+                {
+                    "url": "http://ksa-ehealth.sa/fhir/ksa/nphies-fs/StructureDefinition/ksa-ehealth-humanname-language",
+                    "valueCode": "ar"
+                }
+            ],
+
+            "use": "official",
+            "family": {{ last_name | tojson }},
+            "given": [
+                {{ first_name | tojson }}
+            ],
+            "text": "{{ first_name }} {{ last_name }}"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://ksa-ehealth.sa/fhir/ksa/nphies-fs/StructureDefinition/ksa-ehealth-humanname-language",
+                    "valueCode": "en"
+                }
+            ],
+            "text": "{{ first_name_en }} {{ last_name_en }}",
+            "use": "official",
+            "family": {{ last_name_en | tojson }},
+            "given": [
+                {{ first_name_en | tojson }}
+            ]
+        }
+    ],
+    "telecom": [
+        {
+            "system": "phone",
+            "value": "{{ telecom_mobile }}",
+            "use": "mobile"
+        },
+        {
+            "system": "email",
+            "value": "{{ telecom_email }}"
+        }
+    ],
+    "gender": {{ gender | tojson }},
+    "birthDate": {{ birth_date | tojson }},
+    "maritalStatus": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+                "code": "M",
+                "display": "Married"
+            }
+        ]
+    },
+    "communication": [
+        {
+            "language": {
+                "coding": [
+                    {
+                        "system": "urn:ietf:bcp:47",
+                        "code": "ar",
+                        "display": "Arabic"
+                    }
+                ]
+            },
+            "preferred": true
+        }
+    ],
+    "address": [
+        {
+            "line": [
+                "{{ address_line[0] }}",
+                "{{ address_line[1] }}"
+            ],
+            "city": {{ address_city | tojson }},
+            "postalCode": {{ address_post | tojson }},
+            "country": "Saudi Arabia",
+            "district": "{{ address_district }}",
+            "state": "{{ address_state }}"
+        }
+    ],
+    "resourceType": "Patient"
+}

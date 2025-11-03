@@ -14,3 +14,6 @@ kodjin-insert-batch:
 #port-forward to kauth service
 locust:
 	KODJIN_ROOT_DOMAIN=http://localhost:4003 uv run locust
+
+data-gen:
+	uv run -m scripts.data_generate

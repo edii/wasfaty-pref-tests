@@ -1,0 +1,56 @@
+{
+    "id": {{ id | tojson }},
+    "meta": {
+        "source": "{{ ref_organization }}",
+        "profile": [
+            "http://ksa-ehealth.sa/fhir/StructureDefinition/ksa-ehealth-observation-bodyweight-simple"
+        ],
+        "versionId": "1",
+        "lastUpdated": "{{ last_updated | datetimeformat }}"
+    },
+    "text": {
+        "status": {{ status_text | tojson }},
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"></div>"
+    },
+    "status": {{ status | tojson }},
+    "category": [
+        {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "Vital Signs"
+                }
+            ]
+        }
+    ],
+    "code": {
+        "coding": [
+            {
+                "system": "http://loinc.org",
+                "code": "29463-7",
+                "display": "Body weight"
+            }
+        ],
+        "text": "Body weight"
+    },
+    "subject": {
+        "reference": "{{ ref_patient }}"
+    },
+    "encounter": {
+        "reference": "{{ ref_encounter }}"
+    },
+    "effectiveDateTime": "2025-10-21T10:26:38Z",
+    "performer": [
+        {
+            "reference": "{{ ref_practitioner }}"
+        }
+    ],
+    "valueQuantity": {
+        "value": 80,
+        "unit": "kg",
+        "system": "http://unitsofmeasure.org",
+        "code": "kg"
+    },
+    "resourceType": "Observation"
+}

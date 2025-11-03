@@ -1,0 +1,7 @@
+settings:
+  organization_total: 1
+  practitioner_total: 20
+  patient_total: 10
+  encounter_condition: 100
+  observation_total: 700800
+  composition_total: 233600

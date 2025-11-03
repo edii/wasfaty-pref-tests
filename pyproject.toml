@@ -15,4 +15,7 @@ dependencies = [
     "jwt",
     "pyjwt>=2.10.1",
     "aiohttp>=3.13.1",
+    "colorlog>=6.10.1",
+    "pyyaml>=6.0.3",
+    "faker>=37.12.0",
 ]
